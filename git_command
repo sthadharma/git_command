@@ -1,11 +1,11 @@
 sync(){
     # Cannot run it from master branch
     branch=`git rev-parse --abbrev-ref HEAD`
-    # if [[ $branch =~ "master" ]]
-    # then
-    #  echo "You are in master branch. Use sync command to sync other branch besides master branch"
-    #  return 1
-    # fi
+    if [[ $branch =~ "master" ]]
+    then
+      echo "You are in master branch. Use sync command to sync other branch besides master branch"
+      return 1
+    fi
     
     status=`git status`
     if [[ $status =~ "nothing to commit" ]]
