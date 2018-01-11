@@ -1,0 +1,20 @@
+sync(){
+    # Cannot run it from master branch
+    branch=`git rev-parse --abbrev-ref HEAD`
+    # if [[ $branch =~ "master" ]]
+    # then
+    #  echo "You are in master branch. Use sync command to sync other branch besides master branch"
+    #  return 1
+    # fi
+    
+    status=`git status`
+    if [[ $status =~ "nothing to commit" ]]
+    then
+     git checkout master && git pull && git checkout $branch && git rebase master && git push -f
+    else
+     git status
+     echo "Please commit or stash your change before running sync"
+     return 1
+    fi
+}
+alias merge='sync && git checkout master && git merge --ff-only $branch && git push && git checkout $branch'
